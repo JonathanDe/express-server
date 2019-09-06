@@ -2,6 +2,7 @@ var http = require('http');
 var express = require("express");
 var RED = require("node-red");
 var cors = require('cors');
+const socketIO = require('socket.io');
 
 // Create an Express app
 var app = express();
@@ -12,6 +13,9 @@ app.use(cors());
 
 // Create a server
 var server = http.createServer(app);
+
+// Create Socket server
+const io = socketIO(server);
 
 // Create the settings object - see default settings.js file for other options
 var settings = {
