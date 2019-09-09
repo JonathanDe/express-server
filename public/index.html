@@ -1,12 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Express Server</title>
-</head>
-<body>
-    <h1>Hola Express</h1>
-</body>
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <title>Simple Live Display</title>
+    <script type="text/javascript">
+        var wsUri = 'ws://localhost:8000/api/socket';
+        function wsConnect() {
+            console.log("connect",wsUri);
+            ws = new WebSocket(wsUri);
+            //var line = "";    // either uncomment this for a building list of messages
+            ws.onmessage = function(msg) {
+                var line = "";  // or uncomment this to overwrite the existing message
+                // parse the incoming message as a JSON object
+                var data = msg.data;
+                //console.log(data);
+                // build the output from the topic and payload parts of the object
+                line += "<p>"+data+"</p>";
+                // replace the messages div with the new "line"
+                document.getElementById('messages').innerHTML = line;
+                //ws.send(JSON.stringify({data:data}));
+            }
+            ws.onopen = function() {
+                // update the status div with the connection status
+                document.getElementById('status').innerHTML = "connected";
+                //ws.send("Open for data");
+                console.log("connected");
+            }
+            ws.onclose = function() {
+                // update the status div with the connection status
+                document.getElementById('status').innerHTML = "not connected";
+                // in case of lost connection tries to reconnect every 3 secs
+                setTimeout(wsConnect,3000);
+            }
+        }
+        
+        function doit(m) {
+            if (ws) { ws.send(m); }
+        }
+    </script>
+    </head>
+    <body onload="wsConnect();" onunload="ws.disconnect();">
+        <font face="Arial">
+        <h1>Simple Live Display</h1>
+        <div id="messages"></div>
+        <button type="button" onclick='doit("Jona");'>Click to send message</button>
+        <hr/>
+        <div id="status">unknown</div>
+        </font>
+    </body>
 </html>
