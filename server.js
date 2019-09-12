@@ -51,19 +51,19 @@ function boot() {
   let nodeRed = null;
   
   RED.start().then((result) => {
-      nodeRed = RED.nodes;
-      //Start to listen all input nodes
-      nodeRed.eachNode(function getNodes(nodeI){
-        const node = nodeRed.getNode(nodeI.id);      
-        if(node){       
-          node.on('input', function(msg) {
-            conn.emit(nodeI.id, {
-              msg: msg,
-              node: nodeI
-            });
-          });
-        }
-      }); 
+      // nodeRed = RED.nodes;
+      // //Start to listen all input nodes
+      // nodeRed.eachNode(function getNodes(nodeI){
+      //   const node = nodeRed.getNode(nodeI.id);      
+      //   if(node){       
+      //     node.on('input', function(msg) {
+      //       conn.emit(nodeI.id, {
+      //         msg: msg,
+      //         node: nodeI
+      //       });
+      //     });
+      //   }
+      // }); 
       
     }).catch((err) => {
       console.log("RED.start() ERROR ::: ", err);
