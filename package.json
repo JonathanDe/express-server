@@ -12,7 +12,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "node-red": "^0.19.4",
+    "node-red": "^3.0.2",
     "node-red-contrib-example-lower-case": "file:node-red-contrib-example-lower-case",
     "node-red-embedded-start": "^1.0.1",
     "socket.io": "^2.2.0"
